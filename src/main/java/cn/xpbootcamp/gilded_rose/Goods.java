@@ -1,27 +1,32 @@
 package cn.xpbootcamp.gilded_rose;
 
 public class Goods {
-    public String getSellIn() {
-        return SellIn;
+    private int sellIn;
+    private int quality;
+    private String produceddate;
+
+    public Goods(int sellIn, int quality, String producedDate) {
+        this.sellIn = sellIn;
+        if (quality > 50 || quality < 0) {
+            throw new RuntimeException("Quality should no more than fifty or no less than zero");
+        }
+        this.quality = quality;
+        this.produceddate = producedDate;
+    }
+
+    public void setQuality(int quality) {
+        this.quality = quality;
+    }
+
+    public int getSellIn() {
+        return sellIn;
     }
 
     public int getQuality() {
-        return Quality;
+        return quality;
     }
 
-    public String SellIn;
-
-    public void setQuality(int quality) {
-        Quality = quality;
-    }
-
-    public int Quality;
-
-    public Goods(String SellIn, int Quality) {
-        this.SellIn = SellIn;
-        if (Quality > 50 || Quality < 0) {
-            throw new RuntimeException("Quality should no more than fifty or no less than zero");
-        }
-        this.Quality = Quality;
+    public String getProduceddate() {
+        return produceddate;
     }
 }

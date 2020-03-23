@@ -8,16 +8,18 @@ import static org.junit.jupiter.api.Assertions.*;
 public class GoodsTest {
 
     @Test
-    public void shouldHaveGoodsWithTenSellInAndTwentyQuality() throws Exception {
-        Goods goods = new Goods("2020-03-21", 20);
-        assertEquals("2020-03-21", goods.getSellIn());
+    public void shouldHaveGoodsWithTenSellInAndTwentyQuality() {
+        String producedDate = "2020-03-21";
+        Goods goods = new Goods(10, 20, producedDate);
+        assertEquals(10, goods.getSellIn());
         assertEquals(20, goods.getQuality());
+        assert(producedDate.equals(goods.getProduceddate()));
     }
 
     @Test
     public void goodsQualityShouldNoMoreThanFifty() {
         Exception exception = assertThrows(RuntimeException.class, () -> {
-            new Goods("2020-03-21", 51);
+            new Goods(10, 51, "2020-03-21");
         });
         String expectedMessage = "no more than fifty";
         String actualMessage = exception.getMessage();
@@ -28,7 +30,7 @@ public class GoodsTest {
     @Test
     public void goodsQualityShouldNoLessThanZero() {
         Exception exception = assertThrows(RuntimeException.class, () -> {
-            new Goods("2020-03-21", -1);
+            new Goods(10, -1, "2020-03-21");
         });
         String expectedMessage = "no less than zero";
         String actualMessage = exception.getMessage();
@@ -37,19 +39,29 @@ public class GoodsTest {
     }
 
     @Test
-    public void goodsQualityDecreasedWhenExpired() {
-        LocalDate today = new LocalDate();
-        Goods goods = new Goods(today.minusDays(1).toString(), 20);
+    public void goodsQualityShouldDerease(){
+        String producedDate = new LocalDate().minusDays(1).toString();
+        Goods goods = new Goods(1, 20, producedDate);
         GoodsChecker checker = new GoodsChecker();
         checker.update(goods);
 
-        assertEquals(18, goods.getQuality());
+        assertEquals(19, goods.getQuality());
+    }
+
+    @Test
+    public void goodsQualityDecreasedWhenExpired() {
+        String producedDate = new LocalDate().minusDays(2).toString();
+        Goods goods = new Goods(1, 20, producedDate);
+        GoodsChecker checker = new GoodsChecker();
+        checker.update(goods);
+
+        assertEquals(17, goods.getQuality());
     }
 
     @Test
     public void goodsQualityDecreasedToZeroWhenExpired() {
-        LocalDate today = new LocalDate();
-        Goods goods = new Goods(today.minusDays(11).toString(), 20);
+        String producedDate = new LocalDate().minusDays(25).toString();
+        Goods goods = new Goods(20, 20, producedDate);
         GoodsChecker checker = new GoodsChecker();
         checker.update(goods);
 
