@@ -5,8 +5,8 @@ public class Sulfuras extends Goods{
     public static final int NO_SELLIN = -1;
     public static final String NO_PRODUCED_DATE = "NO PRODUCED DATE";
 
-    public Sulfuras(int sellIn, int quality, String producedDate) {
-        super(sellIn, quality, producedDate);
+    public Sulfuras(int sellIn, int quality, String listedDate) {
+        super(sellIn, quality, listedDate);
     }
 
 
@@ -16,7 +16,7 @@ public class Sulfuras extends Goods{
     }
 
     @Override
-    public String getProduceddate() {
+    public String getListedDate() {
         return NO_PRODUCED_DATE;
     }
 

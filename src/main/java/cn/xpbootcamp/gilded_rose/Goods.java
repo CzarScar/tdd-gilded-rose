@@ -13,15 +13,16 @@ public class Goods {
 
     private int sellIn;
     private int quality;
-    private String produceddate;
 
-    public Goods(int sellIn, int quality, String producedDate) {
+    private String listedDate;
+
+    public Goods(int sellIn, int quality, String listedDate) {
         this.sellIn = sellIn;
         if (quality > MAX_QUALITY || quality < MIN_QUALITY) {
             throw new RuntimeException("Quality should no more than fifty or no less than zero");
         }
         this.quality = quality;
-        this.produceddate = producedDate;
+        this.listedDate = listedDate;
     }
 
     public void setSellIn(int sellIn) {
@@ -32,6 +33,10 @@ public class Goods {
         this.quality = quality;
     }
 
+    public void setListedDate(String listedDate) {
+        this.listedDate = listedDate;
+    }
+
     public int getSellIn() {
         return sellIn;
     }
@@ -40,13 +45,13 @@ public class Goods {
         return quality;
     }
 
-    public String getProduceddate() {
-        return produceddate;
+    public String getListedDate() {
+        return listedDate;
     }
 
     public void updateQualityAndSellIn() {
         LocalDate today = new LocalDate();
-        LocalDate producedDate = new LocalDate(this.getProduceddate());
+        LocalDate producedDate = new LocalDate(this.getListedDate());
         int quality = 0;
         int days = Days.daysBetween(producedDate, today).getDays();
         if (days < this.getSellIn()) {
@@ -57,5 +62,6 @@ public class Goods {
         this.setQuality(quality > MIN_QUALITY ? quality : MIN_QUALITY);
 
         this.setSellIn(this.getSellIn() < days ? MIN_SELLIN : this.getSellIn() - days);
+        this.setListedDate(today.toString());
     }
 }

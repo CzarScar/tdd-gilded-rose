@@ -14,7 +14,7 @@ public class SulfurasTest {
         Sulfuras sulfuras = new Sulfuras(10,10,"2020-03-21");
 
         assertEquals(NO_SELLIN, sulfuras.getSellIn());
-        assertEquals(NO_PRODUCED_DATE, sulfuras.getProduceddate());
+        assertEquals(NO_PRODUCED_DATE, sulfuras.getListedDate());
     }
 
     @Test

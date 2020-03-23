@@ -9,11 +9,11 @@ public class GoodsTest {
 
     @Test
     public void shouldHaveGoodsWithTenSellInAndTwentyQuality() {
-        String producedDate = "2020-03-21";
-        Goods goods = new Goods(10, 20, producedDate);
+        String listedDate = "2020-03-21";
+        Goods goods = new Goods(10, 20, listedDate);
         assertEquals(10, goods.getSellIn());
         assertEquals(20, goods.getQuality());
-        assert (producedDate.equals(goods.getProduceddate()));
+        assert (listedDate.equals(goods.getListedDate()));
     }
 
     @Test
@@ -41,17 +41,19 @@ public class GoodsTest {
     @Test
     public void goodsQualityShouldDerease() {
         String producedDate = new LocalDate().minusDays(1).toString();
+        String today = new LocalDate().toString();
         Goods goods = new Goods(1, 20, producedDate);
         goods.updateQualityAndSellIn();
 
         assertEquals(19, goods.getQuality());
         assertEquals(0, goods.getSellIn());
+        assertEquals(today, goods.getListedDate());
     }
 
     @Test
     public void goodsQualityDecreasedWhenExpired() {
-        String producedDate = new LocalDate().minusDays(2).toString();
-        Goods goods = new Goods(1, 20, producedDate);
+        String listedDate = new LocalDate().minusDays(2).toString();
+        Goods goods = new Goods(1, 20, listedDate);
         goods.updateQualityAndSellIn();
 
         assertEquals(17, goods.getQuality());
@@ -60,8 +62,8 @@ public class GoodsTest {
 
     @Test
     public void goodsQualityDecreasedToZeroWhenExpired() {
-        String producedDate = new LocalDate().minusDays(25).toString();
-        Goods goods = new Goods(20, 20, producedDate);
+        String listedDate = new LocalDate().minusDays(25).toString();
+        Goods goods = new Goods(20, 20, listedDate);
         goods.updateQualityAndSellIn();
 
         assertEquals(0, goods.getQuality());
@@ -70,8 +72,8 @@ public class GoodsTest {
 
     @Test
     public void shouldUpdateQualityAndSellIn() {
-        String producedDate = new LocalDate().minusDays(2).toString();
-        Goods goods = new Goods(10, 20, producedDate);
+        String listedDate = new LocalDate().minusDays(2).toString();
+        Goods goods = new Goods(10, 20, listedDate);
         goods.updateQualityAndSellIn();
 
         assertEquals(18, goods.getQuality());

@@ -15,20 +15,22 @@ public class AgedBrieTest {
     }
 
     @Test
-    public void shouldIncreaseQuality() {
-        String producedDate = new LocalDate().minusDays(10).toString();
-        AgedBrie agedBrie = new AgedBrie(10, 10, producedDate);
+    public void shouldIncreaseQualityAndSellIn() {
+        String listedDate = new LocalDate().minusDays(10).toString();
+        AgedBrie agedBrie = new AgedBrie(10, 10, listedDate);
         agedBrie.updateQualityAndSellIn();
 
         assertEquals(20, agedBrie.getQuality());
+        assertEquals(20, agedBrie.getSellIn());
     }
 
     @Test
     public void qualityShouldNoMoreThanFifty() {
-        String producedDate = new LocalDate().minusDays(60).toString();
-        AgedBrie agedBrie = new AgedBrie(10, 10, producedDate);
+        String listedDate = new LocalDate().minusDays(60).toString();
+        AgedBrie agedBrie = new AgedBrie(10, 10, listedDate);
         agedBrie.updateQualityAndSellIn();
 
         assertEquals(50, agedBrie.getQuality());
+        assertEquals(70, agedBrie.getSellIn());
     }
 }
