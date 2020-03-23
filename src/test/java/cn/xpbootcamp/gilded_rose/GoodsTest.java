@@ -42,8 +42,7 @@ public class GoodsTest {
     public void goodsQualityShouldDerease(){
         String producedDate = new LocalDate().minusDays(1).toString();
         Goods goods = new Goods(1, 20, producedDate);
-        GoodsChecker checker = new GoodsChecker();
-        checker.update(goods);
+        goods.updateQuality();
 
         assertEquals(19, goods.getQuality());
     }
@@ -52,8 +51,7 @@ public class GoodsTest {
     public void goodsQualityDecreasedWhenExpired() {
         String producedDate = new LocalDate().minusDays(2).toString();
         Goods goods = new Goods(1, 20, producedDate);
-        GoodsChecker checker = new GoodsChecker();
-        checker.update(goods);
+        goods.updateQuality();
 
         assertEquals(17, goods.getQuality());
     }
@@ -62,8 +60,7 @@ public class GoodsTest {
     public void goodsQualityDecreasedToZeroWhenExpired() {
         String producedDate = new LocalDate().minusDays(25).toString();
         Goods goods = new Goods(20, 20, producedDate);
-        GoodsChecker checker = new GoodsChecker();
-        checker.update(goods);
+        goods.updateQuality();
 
         assertEquals(0, goods.getQuality());
     }

@@ -1,6 +1,13 @@
 package cn.xpbootcamp.gilded_rose;
 
+import org.joda.time.Days;
+import org.joda.time.LocalDate;
+
 public class Goods {
+
+    public static final int DOUBLE = 2;
+    public static final int SINGLE = 1;
+
     private int sellIn;
     private int quality;
     private String produceddate;
@@ -28,5 +35,18 @@ public class Goods {
 
     public String getProduceddate() {
         return produceddate;
+    }
+
+    public void updateQuality(){
+        LocalDate today = new LocalDate();
+        LocalDate producedDate = new LocalDate(this.getProduceddate());
+        int quality = 0;
+        int days = Days.daysBetween(producedDate, today).getDays();
+        if (days < this.getSellIn()) {
+            quality = this.getQuality() - SINGLE * days;
+        } else {
+            quality = this.getQuality() - SINGLE * this.getSellIn() - DOUBLE * (days - this.getSellIn());
+        }
+        this.setQuality(quality > 0 ? quality : 0);
     }
 }
