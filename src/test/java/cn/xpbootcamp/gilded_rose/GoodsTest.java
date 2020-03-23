@@ -13,7 +13,7 @@ public class GoodsTest {
         Goods goods = new Goods(10, 20, producedDate);
         assertEquals(10, goods.getSellIn());
         assertEquals(20, goods.getQuality());
-        assert(producedDate.equals(goods.getProduceddate()));
+        assert (producedDate.equals(goods.getProduceddate()));
     }
 
     @Test
@@ -39,29 +39,42 @@ public class GoodsTest {
     }
 
     @Test
-    public void goodsQualityShouldDerease(){
+    public void goodsQualityShouldDerease() {
         String producedDate = new LocalDate().minusDays(1).toString();
         Goods goods = new Goods(1, 20, producedDate);
-        goods.updateQuality();
+        goods.updateQualityAndSellIn();
 
         assertEquals(19, goods.getQuality());
+        assertEquals(0, goods.getSellIn());
     }
 
     @Test
     public void goodsQualityDecreasedWhenExpired() {
         String producedDate = new LocalDate().minusDays(2).toString();
         Goods goods = new Goods(1, 20, producedDate);
-        goods.updateQuality();
+        goods.updateQualityAndSellIn();
 
         assertEquals(17, goods.getQuality());
+        assertEquals(0, goods.getSellIn());
     }
 
     @Test
     public void goodsQualityDecreasedToZeroWhenExpired() {
         String producedDate = new LocalDate().minusDays(25).toString();
         Goods goods = new Goods(20, 20, producedDate);
-        goods.updateQuality();
+        goods.updateQualityAndSellIn();
 
         assertEquals(0, goods.getQuality());
+        assertEquals(0, goods.getSellIn());
+    }
+
+    @Test
+    public void shouldUpdateQualityAndSellIn() {
+        String producedDate = new LocalDate().minusDays(2).toString();
+        Goods goods = new Goods(10, 20, producedDate);
+        goods.updateQualityAndSellIn();
+
+        assertEquals(18, goods.getQuality());
+        assertEquals(8, goods.getSellIn());
     }
 }

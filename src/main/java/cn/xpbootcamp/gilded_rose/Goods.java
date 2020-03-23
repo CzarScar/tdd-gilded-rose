@@ -7,6 +7,9 @@ public class Goods {
 
     public static final int DOUBLE = 2;
     public static final int SINGLE = 1;
+    public static final int MAX_QUALITY = 50;
+    public static final int MIN_QUALITY = 0;
+    public static final int MIN_SELLIN = 0;
 
     private int sellIn;
     private int quality;
@@ -14,11 +17,15 @@ public class Goods {
 
     public Goods(int sellIn, int quality, String producedDate) {
         this.sellIn = sellIn;
-        if (quality > 50 || quality < 0) {
+        if (quality > MAX_QUALITY || quality < MIN_QUALITY) {
             throw new RuntimeException("Quality should no more than fifty or no less than zero");
         }
         this.quality = quality;
         this.produceddate = producedDate;
+    }
+
+    public void setSellIn(int sellIn) {
+        this.sellIn = sellIn;
     }
 
     public void setQuality(int quality) {
@@ -37,7 +44,7 @@ public class Goods {
         return produceddate;
     }
 
-    public void updateQuality(){
+    public void updateQualityAndSellIn() {
         LocalDate today = new LocalDate();
         LocalDate producedDate = new LocalDate(this.getProduceddate());
         int quality = 0;
@@ -47,6 +54,8 @@ public class Goods {
         } else {
             quality = this.getQuality() - SINGLE * this.getSellIn() - DOUBLE * (days - this.getSellIn());
         }
-        this.setQuality(quality > 0 ? quality : 0);
+        this.setQuality(quality > MIN_QUALITY ? quality : MIN_QUALITY);
+
+        this.setSellIn(this.getSellIn() < days ? MIN_SELLIN : this.getSellIn() - days);
     }
 }
